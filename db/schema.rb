@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120207174244) do
+ActiveRecord::Schema.define(:version => 20120213120158) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -1696,6 +1696,7 @@ ActiveRecord::Schema.define(:version => 20120207174244) do
     t.string   "post_code"
     t.string   "my_gender"
     t.integer  "report_frequency",                            :default => 2
+    t.boolean  "is_capital_subscribed",                       :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
