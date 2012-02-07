@@ -624,6 +624,7 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.string   "required_tags"
     t.text     "message_for_new_priority"
     t.string   "parent_tag"
+    t.text     "message_to_users"
   end
 
   add_index "partners", ["short_name"], :name => "short_name"
