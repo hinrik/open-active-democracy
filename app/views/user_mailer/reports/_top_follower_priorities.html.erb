@@ -6,7 +6,7 @@
                   priority_name: link_to(important[:priority].name, important[:priority].show_url),
                   followers_count: important[:follower_endorsements]) %> <%= tr("It is currently in {position}. place in the {category} category.", "email",
                                                                                 position: important[:position],
-                                                                                category: link_to(important[:category].name, important[:category].show_url)) %></p>
+                                                                                category: link_to(tr(important[:category].name, "model/category"), important[:category].show_url)) %></p>
     <% end %>
     <br>
 <% end %>
