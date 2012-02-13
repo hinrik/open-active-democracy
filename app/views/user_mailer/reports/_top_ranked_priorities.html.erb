@@ -1,5 +1,5 @@
 <% if not @important.empty? %>
-    <h4><%= tr("These are your top {priorities_count} priorities, if you really feel strongly about them then you can encourage others to support them.",
+    <h4><%= tr("These are your top {priorities_count} priorities, if you really feel strongly about them then you can encourage others to support or oppose them.",
                       "email", priorities_count: @important.count) %></h4>
 
     <% @important.each do |priority| %>
