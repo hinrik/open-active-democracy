@@ -1146,8 +1146,8 @@ class User < ActiveRecord::Base
     top_priorities = {}
     priority_followers = {}
     top_category_score = {}
-    Government.current.default_tags_checkbox.split(',').each do |tag|
-      category = Tag.find_by_name(tag)
+    Category.all.each do |category|
+      category = Tag.find_by_name(category.name)
       top_priorities[category] = Priority.filtered.tagged_with(category, :on => :issues).published.top_rank.limit(3)
       top_category_score[category] = top_priorities[category].shift.score
       top_priorities[category].each do |priority|

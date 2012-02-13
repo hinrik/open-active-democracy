@@ -10,12 +10,12 @@
                   <%= tr("The priority {priority_name}, which you support, is in {position}. place in the {category} category.", "email",
                          priority_name: link_to(near_top[:priority].name, near_top[:priority].show_url),
                          position: near_top[:position],
-                         category: link_to(near_top[:category].name, near_top[:category].show_url)) %>
+                         category: link_to(tr(near_top[:category].name, "model/category"), near_top[:category].show_url)) %>
               <% else %>
                   <%= tr("The priority {priority_name}, which you oppose, is in {position}. place in the {category} category.", "email",
                          priority_name: link_to(near_top[:priority].name, near_top[:priority].show_url),
                          position: near_top[:position],
-                         category: link_to(near_top[:category].name, near_top[:category].show_url)) %>
+                         category: link_to(tr(near_top[:category].name, "model/category"), near_top[:category].show_url)) %>
               <% end %>
             </p>
         <% end %>
