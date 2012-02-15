@@ -7,7 +7,7 @@ class IssuesController < ApplicationController
   def index
     @page_title =  tr("Categories", "controller/issues")
     #if request.format != 'html' or current_government.tags_page == 'list'
-    @categories = Category.all.collect { |category| Tag.find_by_name(category.name) }
+    @categories = Category.all.collect { |category| Tag.filtered.find_by_name(category.name) }.select { |t| t != nil }
     partner_tags = {}
     Partner.all.each do |partner|
       if partner.required_tags
