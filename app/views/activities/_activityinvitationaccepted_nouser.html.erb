@@ -1,6 +1,6 @@
 <img src="/images/icons/email_open_image.png" height="16" width="16" border="0" class="icon">
 <% if activity.other_user %>
-	<%= raw tr("Accepted an invitation from {other_user_name} to join {government_name}", "view/activities/_activityinvitationaccepted_nouser", :user_name => link_to(activity.user.login, activity.user), :other_user_name => link_to(activity.other_user.login, activity.other_user), :government_name => tr(current_government.name,"Name from database"))%>
+	<%= raw tr("Accepted an invitation from {other_user_name} to join {government_name}", "view/activities/_activityinvitationaccepted_nouser", :other_user_name => link_to(activity.other_user.login, activity.other_user), :government_name => tr(current_government.name,"Name from database"))%>
 <% else %>
-	<%= raw tr("Accepted an invitation to join {government_name}", "view/activities/_activityinvitationaccepted_nouser", :user_name => link_to(activity.user.login, activity.user), :government_name => tr(current_government.name,"Name from database"))%>
+	<%= raw tr("Accepted an invitation to join {government_name}", "view/activities/_activityinvitationaccepted_nouser", :government_name => tr(current_government.name,"Name from database"))%>
 <% end %>

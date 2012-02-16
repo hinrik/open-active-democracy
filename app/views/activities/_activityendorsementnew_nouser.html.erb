@@ -1,14 +1,14 @@
 <img src="/images/icons/accept.png" height="16" width="16" border="0" class="icon">
 <% if activity.has_ad? %>
 	<% if activity.attribute_present?("position") %>
-		<%= raw tr("Endorsed {priority_name} at priority {position} due to <a href='{ad_url}'>{ad_user} ad</a>", "view/activities/_activityendorsementnew_nouser", :user_name => link_to(activity.user.login, activity.user), :priority_name => link_to(activity.priority.name, activity.priority), :position => activity.position, :ad_url => priority_ad_path(activity.priority,activity.ad), :ad_user => activity.ad.user.name.possessive) %>
+		<%= raw tr("Endorsed {priority_name} at priority {position} due to <a href='{ad_url}'>{ad_user} ad</a>", "view/activities/_activityendorsementnew_nouser", :priority_name => link_to(activity.priority.name, activity.priority), :position => activity.position, :ad_url => priority_ad_path(activity.priority,activity.ad), :ad_user => activity.ad.user.name.possessive) %>
 	<% elsif activity.priority %>
-		<%= raw tr("Endorsed {priority_name} due to <a href='{ad_url}'>{ad_user} ad</a>", "view/activities/_activityendorsementnew_nouser", :user_name => link_to(activity.user.login, activity.user), :priority_name => link_to(activity.priority.name, activity.priority), :ad_url => priority_ad_path(activity.priority,activity.ad), :ad_user => activity.ad.user.name.possessive) %>
+		<%= raw tr("Endorsed {priority_name} due to <a href='{ad_url}'>{ad_user} ad</a>", "view/activities/_activityendorsementnew_nouser", :priority_name => link_to(activity.priority.name, activity.priority), :ad_url => priority_ad_path(activity.priority,activity.ad), :ad_user => activity.ad.user.name.possessive) %>
 	<% end %>
 <% else %>
 	<% if activity.attribute_present?("position") %>
-		<%= raw tr("Endorsed {priority_name} at priority {position}", "view/activities/_activityendorsementnew_nouser", :user_name => link_to(activity.user.login, activity.user), :priority_name => link_to(activity.priority.name, activity.priority), :position => activity.position) %>
+		<%= raw tr("Endorsed {priority_name} at priority {position}", "view/activities/_activityendorsementnew_nouser", :priority_name => link_to(activity.priority.name, activity.priority), :position => activity.position) %>
 	<% elsif activity.priority %>
-		<%= raw tr("Endorsed {priority_name}", "view/activities/_activityendorsementnew_nouser", :user_name => link_to(activity.user.login, activity.user), :priority_name => link_to(activity.priority.name, activity.priority)) %>
+		<%= raw tr("Endorsed {priority_name}", "view/activities/_activityendorsementnew_nouser", :priority_name => link_to(activity.priority.name, activity.priority)) %>
 	<% end %>
 <% end %>
