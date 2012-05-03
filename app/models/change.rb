@@ -9,8 +9,8 @@ class Change < ActiveRecord::Base
   
   scope :active, :conditions => "changes.status in ('sent','suggested')"
   scope :inactive, :conditions => "changes.status in ('notsent','approved','declined')"
-  scope :not_deleted, :conditions => "changes.status <> 'deleted'"
-  scope :deleted, :conditions => "changes.status = 'deleted'"
+  scope :not_removed, :conditions => "changes.status <> 'removed'"
+  scope :removed, :conditions => "changes.status = 'removed'"
 
   scope :by_recently_created, :order => "changes.created_at desc"
   scope :by_recently_started, :order => "changes.sent_at desc"  
@@ -55,21 +55,21 @@ class Change < ActiveRecord::Base
       event :dont_send, transitions_to: :notsent
       event :approve, transitions_to: :approved
       event :decline, transitions_to: :declined
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :sent do
       event :approve, transitions_to: :approved
       event :decline, transitions_to: :declined
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :notsent
     state :approved do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :declined do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
-    state :delete
+    state :remove
   end
 
   after_create :add_to_priority
@@ -280,7 +280,7 @@ class Change < ActiveRecord::Base
     remove_notifications    
   end
   
-  def on_deleted_entry(new_state, event)
+  def on_removed_entry(new_state, event)
     priority.update_attribute(:change_id,nil)    
     # refund their political capital
     if has_cost?

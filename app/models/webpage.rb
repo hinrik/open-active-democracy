@@ -12,15 +12,15 @@ class Webpage < ActiveRecord::Base
   workflow_column :status
   workflow do
     state :published do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :draft do
       event :publish, transitions_to: :published
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
-    state :deleted do
-      event :undelete, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
-      event :undelete, transitions_to: :draft
+    state :removed do
+      event :unremove, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
+      event :unremove, transitions_to: :draft
     end
   end
   

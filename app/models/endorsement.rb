@@ -3,7 +3,7 @@ class Endorsement < ActiveRecord::Base
   extend ActiveSupport::Memoizable
   
   scope :active, :conditions => "endorsements.status = 'active'"
-  scope :deleted, :conditions => "endorsements.status = 'deleted'" 
+  scope :removed, :conditions => "endorsements.status = 'removed'" 
   scope :suspended, :conditions => "endorsements.status = 'suspended'"
   scope :active_and_inactive, :conditions => "endorsements.status in ('active','inactive','finished')" 
   scope :opposing, :conditions => "endorsements.value < 0"
@@ -54,9 +54,9 @@ class Endorsement < ActiveRecord::Base
     state :finished do
       event :deactivate, transitions_to: :inactive
     end
-    state :deleted do
+    state :removed do
       event :activate, transitions_to: :active
-      event :undelete, transitions_to: :active
+      event :unremove, transitions_to: :active
       event :replace, transitions_to: :replaced
     end
     state :suspended do
@@ -65,7 +65,7 @@ class Endorsement < ActiveRecord::Base
     end
     state :replaced do
       event :activate, transitions_to: :active
-      event :undelete, transitions_to: :active
+      event :unremove, transitions_to: :active
     end
   end
 
@@ -129,7 +129,7 @@ class Endorsement < ActiveRecord::Base
 #    return unless user_id == Government.current.official_user_id
 #    Priority.update_all("official_value = 1", ["id = ?",priority_id]) if is_up? and status == 'active'
 #    Priority.update_all("official_value = -1", ["id = ?",priority_id]) if is_down? and status == 'active'
-#    Priority.update_all("official_value = 0", ["id = ?",priority_id]) if status == 'deleted'
+#    Priority.update_all("official_value = 0", ["id = ?",priority_id]) if status == 'removed'
   end
   
   def priority_name

@@ -73,22 +73,22 @@ class Document < ActiveRecord::Base
   workflow_column :status
   workflow do
     state :published do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
       event :abusive, transitions_to: :abusive
     end
     state :draft do
       event :publish, transitions_to: :published
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
     end
-    state :deleted do
+    state :removed do
       event :bury, transitions_to: :buried
-      event :undelete, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
-      event :undelete, transitions_to: :draft
+      event :unremove, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
+      event :unremove, transitions_to: :draft
     end
     state :buried do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :unbury, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
       event :unbury, transitions_to: :draft
     end
@@ -118,10 +118,10 @@ class Document < ActiveRecord::Base
     priority.save(:validate => false) if priority
   end
   
-  def on_deleted_entry(new_state, event)
+  def on_removed_entry(new_state, event)
     remove_counts
     activities.each do |a|
-      a.delete!
+      a.remove!
     end
     # look for any capital they may have earned on this document, and remove it
     capital_earned = capitals.sum(:amount)
@@ -130,7 +130,7 @@ class Document < ActiveRecord::Base
     end
     priority.save(:validate => false)
     for r in revisions
-      r.delete!
+      r.remove!
     end
   end
   
@@ -285,8 +285,8 @@ class Document < ActiveRecord::Base
     score > 0    
   end
   
-  def is_deleted?
-    status == 'deleted'
+  def is_removed?
+    status == 'removed'
   end
   
   def helpful_endorsers_capital_spent

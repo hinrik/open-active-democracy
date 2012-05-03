@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321185510) do
+ActiveRecord::Schema.define(:version => 20120425204051) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -552,7 +552,7 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.datetime "read_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "deleted_at"
+    t.datetime "removed_at"
     t.text     "content_html"
   end
 
@@ -573,7 +573,7 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.datetime "sent_at"
     t.datetime "read_at"
     t.datetime "processed_at"
-    t.datetime "deleted_at"
+    t.datetime "removed_at"
   end
 
   add_index "notifications", ["notifiable_type", "notifiable_id"], :name => "index_notifications_on_notifiable_type_and_notifiable_id"
@@ -603,7 +603,7 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.string   "status",                                    :default => "passive"
     t.integer  "users_count",                               :default => 0
     t.string   "website"
-    t.datetime "deleted_at"
+    t.datetime "removed_at"
     t.string   "ip_address",                 :limit => 16
     t.boolean  "is_daily_summary",                          :default => true
     t.string   "unsubscribe_url"
@@ -757,7 +757,7 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.integer  "endorsements_count",                      :default => 0,     :null => false
     t.string   "status",                   :limit => 50
     t.string   "ip_address",               :limit => 16
-    t.datetime "deleted_at"
+    t.datetime "removed_at"
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -1610,7 +1610,7 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.integer  "picture_id"
     t.string   "status",                       :limit => 30,  :default => "pending"
     t.integer  "partner_id"
-    t.datetime "deleted_at"
+    t.datetime "removed_at"
     t.string   "ip_address",                   :limit => 16
     t.datetime "loggedin_at"
     t.string   "zip",                          :limit => 10

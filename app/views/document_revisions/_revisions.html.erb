@@ -5,9 +5,9 @@
 	<tr><td valign="top" width="24">
 		<%= render :partial => "users/pic", :locals => {:user => revision.user}%>
 	</td><td valign="top" class="left_scale5">
-		<% if revision.user.status == 'suspended' or revision.user.status == 'deleted' %><strike><% end %>
+		<% if revision.user.status == 'suspended' or revision.user.status == 'removed' %><strike><% end %>
 		<%= link_to_unless_current tr("{user_name} revision", "view/document_revisions/_revisions", :user_name => revision.user.name), document_revision_url(@document,revision) %>
-		<% if revision.user.status == 'suspended' or revision.user.status == 'deleted' %></strike><% end %>		
+		<% if revision.user.status == 'suspended' or revision.user.status == 'removed' %></strike><% end %>		
 		<div class="profile_small"><%= tr("{count} words", "view/document_revisions/_revisions", :count => revision.word_count)%>, <%= time_ago(revision.created_at) %></div>
 	</td></tr>
 </table>

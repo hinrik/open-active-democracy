@@ -27,24 +27,24 @@ class Partner < ActiveRecord::Base
     state :passive do
       event :registered, transitions_to: :pending
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :pending do
       event :activate, transitions_to: :active
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :active do
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :suspended do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :unsuspend, transitions_to: :active, meta: { validates_presence_of: [:activated_at] }
       event :unsuspend, transitions_to: :pending, meta: { validates_presence_of: [:activation_code] }
       event :unsuspend, transitions_to: :passive
     end
-    state :deleted
+    state :removed
   end
 
   before_save :clean_urls
@@ -164,8 +164,8 @@ class Partner < ActiveRecord::Base
     end
   end
 
-  def on_deleted_entry(new_state, event)
-    self.deleted_at = Time.now
+  def on_removed_entry(new_state, event)
+    self.removed_at = Time.now
     save(:validate => false)
   end
 end

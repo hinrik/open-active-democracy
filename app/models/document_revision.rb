@@ -19,15 +19,15 @@ class DocumentRevision < ActiveRecord::Base
     end
     state :archived do
       event :publish, transitions_to: :published
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :published do
       event :archive, transitions_to: :archived
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
-    state :deleted do
-      event :undelete, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
-      event :undelete, transitions_to: :draft
+    state :removed do
+      event :unremove, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
+      event :unremove, transitions_to: :draft
     end
   end
 
@@ -98,7 +98,7 @@ class DocumentRevision < ActiveRecord::Base
     save(:validate => false)
   end
   
-  def on_deleted_entry(new_state, event)
+  def on_removed_entry(new_state, event)
     document.decrement!(:revisions_count)
     user.decrement!(:document_revisions_count)    
   end

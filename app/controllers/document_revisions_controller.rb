@@ -19,7 +19,7 @@ class DocumentRevisionsController < ApplicationController
 
   # GET /documents/1/revisions/1
   def show
-    if @document.is_deleted?
+    if @document.is_removed?
       flash[:error] = tr("That document was deleted", "controller/revisions")
       redirect_to @document.priority
       return

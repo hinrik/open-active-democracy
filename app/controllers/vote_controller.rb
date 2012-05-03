@@ -61,7 +61,7 @@ class VoteController < ApplicationController
         redirect_to @vote.change.priority
       end
       return
-    elsif @vote.status == 'deleted'
+    elsif @vote.status == 'removed'
       redirect_to "/"
       return
     end    

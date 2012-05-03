@@ -66,7 +66,7 @@ module PortalHelper
   end
 
   def setup_priorities_finished(limit, tag_name = nil)
-    get_cached_priorities("Priority.filtered.finished.not_deleted.by_random.item_limit(#{limit})")
+    get_cached_priorities("Priority.filtered.finished.not_removed.by_random.item_limit(#{limit})")
     {:priorities=>@priorities, :endorsements=>get_endorsements, :more=>finished_priorities_url}
   end
 

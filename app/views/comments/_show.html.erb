@@ -43,7 +43,7 @@
 		
 		
 
-		<% if logged_in? and not comment.deleted? and ((@comments and comment == @comments.last and current_user.id == comment.user_id) or current_user.is_admin?) %>
+		<% if logged_in? and not comment.removed? and ((@comments and comment == @comments.last and current_user.id == comment.user_id) or current_user.is_admin?) %>
 <div class="delete-comment">
 			<%= link_to tr("delete", "view/comments/_show"), activity_comment_url(comment.activity_id,comment),
 			            :method => :delete,

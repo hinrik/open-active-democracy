@@ -95,7 +95,7 @@ class NetworkController < ApplicationController
   
   def deleted
     @page_title = tr("Deleted accounts", "controller/network", :government_name => tr(current_government.name,"Name from database"))
-    @users = User.deleted.by_deleted_at.paginate :page => params[:page], :per_page => 100
+    @users = User.removed.by_removed_at.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html { render :action => "list" }
       format.xml { render :xml => @users.to_xml(:include => [:referral, :partner_referral], :except => NB_CONFIG['api_exclude_fields']) }

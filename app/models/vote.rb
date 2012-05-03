@@ -1,7 +1,7 @@
 class Vote < ActiveRecord::Base
   
-  scope :deleted, :conditions => "votes.status = 'deleted'"
-  scope :not_deleted, :conditions => "votes.status <> 'deleted'"
+  scope :removed, :conditions => "votes.status = 'removed'"
+  scope :not_removed, :conditions => "votes.status <> 'removed'"
   scope :active, :conditions => "votes.status = 'active'", :include => {:change => :priority}, :order => "priorities.endorsements_count desc"
   scope :pending, :conditions => "votes.status in ('active','sent')", :include => {:change => :priority}, :order => "votes.created_at desc"
 
@@ -22,20 +22,20 @@ class Vote < ActiveRecord::Base
       event :implicit_approve, transitions_to: :implicit_approved
       event :implicit_decline, transitions_to: :implicit_declined
       event :deactivate, transitions_to: :inactive
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :approved do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :implicit_approved
     state :declined do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :implicit_declined
     state :inactive do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
-    state :deleted
+    state :removed
   end
 
   def on_approved_entry(new_state, event)

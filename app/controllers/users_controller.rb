@@ -497,7 +497,7 @@ class UsersController < ApplicationController
    # DELETE /user
   def destroy
     @user = User.find(current_user.id)
-    @user.delete!
+    @user.remove!
     self.current_user.forget_me
     cookies.delete :auth_token
     reset_session
@@ -572,7 +572,7 @@ class UsersController < ApplicationController
           return true
         end
       end
-      if @user.status == 'deleted'
+      if @user.status == 'removed'
         flash[:error] = tr("That user deleted their account", "controller/users")
         return true
       end

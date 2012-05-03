@@ -345,7 +345,7 @@ class PrioritiesController < ApplicationController
   def finished
     @page_title = tr("Priorities in progress", "controller/priorities")
     @rss_url = finished_priorities_url(:format => 'rss')
-    @priorities = Priority.finished.not_deleted.by_most_recent_status_change.paginate :page => params[:page], :per_page => params[:per_page]
+    @priorities = Priority.finished.not_removed.by_most_recent_status_change.paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html { render :action => "list" }
       format.rss { render :action => "list" }
@@ -992,7 +992,7 @@ class PrioritiesController < ApplicationController
   def abusive
     @priority = Priority.find(params[:id])
     @priority.do_abusive
-    @priority.delete!
+    @priority.remove!
     respond_to do |format|
       format.js {
         render :update do |page|
@@ -1112,7 +1112,7 @@ class PrioritiesController < ApplicationController
     end
     return unless @priority
     name = @priority.name
-    @priority.delete!
+    @priority.remove!
     flash[:notice] = tr("Permanently deleting {priority_name}. This may take a few minutes depending on how many endorsements/oppositions need to be removed.", "controller/priorities", :priority_name => name)
     respond_to do |format|
       format.html { redirect_to yours_created_priorities_url }    
@@ -1142,7 +1142,7 @@ class PrioritiesController < ApplicationController
     
     def load_endorsement
       @priority = Priority.find(params[:id])
-      if @priority.status == 'deleted' or @priority.status == 'abusive'
+      if @priority.status == 'removed' or @priority.status == 'abusive'
         flash[:notice] = tr("That priority was deleted", "controller/priorities")
         redirect_to "/"
         return false

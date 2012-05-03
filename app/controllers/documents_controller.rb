@@ -65,7 +65,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   def show
     get_document
-    if @document.is_deleted?
+    if @document.is_removed?
       flash[:error] = tr("That document was deleted", "controller/documents")
       redirect_to @document.priority and return
     end
@@ -246,7 +246,7 @@ class DocumentsController < ApplicationController
       redirect_to(@document)
       return
     end
-    @document.delete!
+    @document.remove!
     ActivityDocumentDeleted.create(:user => current_user, :document => @document)
     respond_to do |format|
       format.html { redirect_to(documents_url) }
@@ -274,7 +274,7 @@ class DocumentsController < ApplicationController
   def abusive
     @document = Document.find(params[:id])
     @document.do_abusive
-    @document.delete!
+    @document.remove!
     respond_to do |format|
       format.js {
         render :update do |page|
